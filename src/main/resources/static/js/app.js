@@ -20,7 +20,7 @@ async function searchProducts() {
 
 async function addToFavorites(productId, productName, productUrl, productImage) {
 	const favorite = {
-		userId: 1, // 예시로 고정 사용자 ID 사용
+		userId: 2, // 예시로 고정 사용자 ID 사용
 		productId,
 		productName,
 		productUrl,
