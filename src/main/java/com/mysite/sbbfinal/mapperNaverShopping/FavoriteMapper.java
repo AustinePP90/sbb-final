@@ -9,5 +9,5 @@ import com.mysite.sbbfinal.dtoNaverFavorite.Favorite;
 @Mapper
 public interface FavoriteMapper {
     void insertFavorite(Favorite favorite);
-    List<Favorite> selectFavoritesByUserId(int userId);
+    List<Favorite> selectFavoritesByUserId(Long userId);
 }

@@ -20,7 +20,7 @@ public class FavoriteService {
         favoriteMapper.insertFavorite(favorite);
     }
     
-    public List<Favorite> getFavoritesByUserId(int userId) {
+    public List<Favorite> getFavoritesByUserId(Long userId) {
         return favoriteMapper.selectFavoritesByUserId(userId);
     }
 

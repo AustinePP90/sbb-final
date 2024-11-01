@@ -41,6 +41,14 @@ public class FavoriteController {
     @PostMapping("/favorites")
     @ResponseBody
     public ResponseEntity<String> addFavorite(@RequestBody Favorite favorite) {
+        // 인증된 사용자 ID 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+    	
+        // userId를 서비스에서 가져오는 방식으로 변경 (username으로 검색)
+        Long userId = userService.getUserIdByUsername(username);
+        favorite.setUserId(userId);  // 예: favorite에 userId 설정
+        
         favoriteService.addFavorite(favorite);
         return ResponseEntity.ok("Added to favorites");
     }
@@ -52,7 +60,7 @@ public class FavoriteController {
         String username = authentication.getName();
     	
         // userId를 서비스에서 가져오는 방식으로 변경 (username으로 검색)
-        int userId = userService.getUserIdByUsername(username);
+        Long userId = userService.getUserIdByUsername(username);
         
         // 해당 사용자 ID의 즐겨찾기 목록 조회
         List<Favorite> favorites = favoriteService.getFavoritesByUserId(userId);

@@ -60,7 +60,7 @@
         SELECT * FROM tusers WHERE id = #{id}
     </select>
      <!-- username으로 userId 읽어오기 -->
-    <select id="getUserIdByUsername" resultType="int" parameterType="string">
+    <select id="getUserIdByUsername" resultType="Long" parameterType="string">
         SELECT id FROM tusers WHERE username = #{username}
     </select>
     <!--모든 권한 읽어오기-->

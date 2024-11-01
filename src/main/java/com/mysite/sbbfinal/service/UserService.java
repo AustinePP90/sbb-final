@@ -12,7 +12,7 @@ public class UserService {
 	
     private final UserMapper userMapper;
 
-    public int getUserIdByUsername(String username) {
+    public Long getUserIdByUsername(String username) {
         return userMapper.getUserIdByUsername(username);
     }
 }
