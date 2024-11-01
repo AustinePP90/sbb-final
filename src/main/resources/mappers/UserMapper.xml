@@ -12,7 +12,7 @@
             <result property="name" column="role_name"/>
         </collection>
     </resultMap>
-
+	<!--로그인-->
     <select id="findByUsername" resultMap="UserWithRoles">
         SELECT u.id as user_id,
                u.username,
@@ -25,5 +25,15 @@
                  LEFT JOIN roles r ON ur.role_id = r.id
         WHERE u.username = #{username}
     </select>
+    <!--회원가입(save, insertUserRole)-->
+    <insert id="save" parameterType="com.mysite.sbbfinal.domain.User" 
+    		useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tusers (username, password, enabled)
+        VALUES (#{username}, #{password}, #{enabled})
+    </insert>  
+     <insert id="insertUserRole">
+        INSERT INTO tuser_roles (user_id, role_id)
+        VALUES (#{userId}, #{roleId})
+    </insert>
     
 </mapper>
