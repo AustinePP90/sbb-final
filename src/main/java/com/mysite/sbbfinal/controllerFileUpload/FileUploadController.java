@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -47,9 +49,34 @@ public class FileUploadController {
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
             return ResponseEntity.ok("File uploaded successfully: " + uniqueFilename);
+            
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to upload file: " + e.getMessage());
         }
+    }
+    
+    // 다중 파일 업로드
+    @PostMapping("/upload-multiple")
+    public ResponseEntity<List<String>> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
+        List<String> uploadedFiles = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+            try {
+            	// 파일명 충돌 방지를 위한 고유 파일명 생성
+                String uniqueFilename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+                // 파일 저장 경로 설정
+                Path filePath = Paths.get(uploadDirectory, uniqueFilename);
+                // 파일 저장
+                Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+                uploadedFiles.add(uniqueFilename);
+                
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(List.of("Failed to upload files: " + e.getMessage()));
+            }
+        }
+
+        return ResponseEntity.ok(uploadedFiles);
     }
 }
