@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mysite.sbbfinal.mapper.UserMapper">
+
+    <resultMap id="UserWithRoles" type="com.mysite.sbbfinal.domain.User">
+        <id property="id" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="enabled" column="enabled"/>
+        <collection property="roles" ofType="com.mysite.sbbfinal.domain.Role">
+            <id property="id" column="role_id"/>
+            <result property="name" column="role_name"/>
+        </collection>
+    </resultMap>
+
+    <select id="findByUsername" resultMap="UserWithRoles">
+        SELECT u.id as user_id,
+               u.username,
+               u.password,
+               u.enabled,
+               r.id as role_id,
+               r.name as role_name
+        FROM tusers u
+                 LEFT JOIN tuser_roles ur ON u.id = ur.user_id
+                 LEFT JOIN roles r ON ur.role_id = r.id
+        WHERE u.username = #{username}
+    </select>
+    
+</mapper>
