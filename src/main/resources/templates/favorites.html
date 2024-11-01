@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>FAVORITES</title>
+</head>
+<body>
+	<h1><span sec:authentication="name"></span>님의 즐겨찾기 목록!</h1>
+	<div th:each="favorite : ${favorites}">
+		<h3 th:utext="${favorite.productName}"></h3>
+		<p><a th:href="${favorite.productUrl}">구입하러 가기!</a></p>
+		<img th:src="${favorite.productImage}" alt="${favorite.productName}">
+	</div>
+       
+	<a th:href="@{/}">홈으로 돌아가기</a>
+</body>
+</html>
