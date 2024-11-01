@@ -1,3 +1,7 @@
+// meta 태그에서 CSRF 토큰과 헤더 이름 가져오기
+const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+const csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
+
 async function searchProducts() {
 	const query = document.getElementById("query").value;
 	const response = await fetch(`/api/search?query=${query}`);
@@ -27,7 +31,10 @@ async function addToFavorites(productId, productName, productUrl, productImage) 
 	};
 	await fetch('/api/favorites', {
 		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
+		headers: { 
+			'Content-Type': 'application/json',
+			[csrfHeader]: csrfToken // CSRF 헤더와 토큰 추가
+		 },
 		body: JSON.stringify(favorite)
 	});
 	alert("즐겨찾기에 추가되었습니다");

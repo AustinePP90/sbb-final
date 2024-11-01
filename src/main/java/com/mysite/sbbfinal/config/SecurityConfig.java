@@ -19,7 +19,7 @@ public class SecurityConfig {
         log.info("security config ...");
 
         http	
-        		.csrf(csrf -> csrf.disable()) // 개발 중 테스트 목적으로 비활성화, 데이터베이스에 데이터 저장 가능
+        		// .csrf(csrf -> csrf.disable()) // 개발 중 테스트 목적으로 비활성화, 데이터베이스에 데이터 저장 가능, CSRF토큰 설정시 활성화하면 500에러 발생! 
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/", "/home", "/signup", "/error").permitAll()
                         .requestMatchers("/js/**", "/css/**", "/favicon.*", "/api/**").permitAll()
