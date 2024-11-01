@@ -1,11 +1,16 @@
 package com.mysite.sbbfinal.controller;
 
+import java.util.List;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mysite.sbbfinal.domain.Role;
 import com.mysite.sbbfinal.domain.User;
 import com.mysite.sbbfinal.mapper.UserMapper;
 
@@ -54,5 +59,27 @@ public class HomeController {
         userMapper.insertUserRole(user.getId(), 1L);
 
         return "redirect:/login";
+    }
+    
+    // 사용자 목록
+    @GetMapping("/users")
+    public String userList(Model model) {
+        List<User> users = userMapper.findAll(); // findAll 메서드 추가 필요
+        model.addAttribute("users", users);
+        
+        return "user-list";
+    }
+    
+    // 사용자의 권한 목록 조회
+    @GetMapping("/user/{userId}/roles")
+    public String userRoles(@PathVariable("userId") Long userId, Model model) {
+        List<Role> roles = userMapper.findRolesByUserId(userId);
+        String username = userMapper.findById(userId).getUsername();
+
+        model.addAttribute("roles", roles);
+        model.addAttribute("username", username);
+        model.addAttribute("userId", userId);
+
+        return "user-roles";
     }
 }

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>USERROLES</title>
+</head>
+<body>
+	<h1>사용자 권한 관리</h1>
+	<h3 th:text="${username + '의 권한 목록'}"></h3>
+
+	<!-- 현재 권한 목록 -->
+	<div>
+		<div>현재 권한</div>
+		<div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>권한 ID</th>
+						<th>권한명</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="role : ${roles}">
+						<td th:text="${role.id}"></td>
+						<td th:text="${role.name}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!-- 권한 추가 폼 -->
+	<div>
+		<div>권한 추가</div>
+		<div>
+			<form th:action="@{/user/{userId}/role/add(userId=${userId})}" method="post">
+				<label for="roleId"> 
+					<select name="roleId" id="roleId">
+						<option th:each="role : ${@userMapper.getAllRoles()}" 
+								th:value="${role.id}" th:text="${role.name}">
+						</option>
+					</select>
+				</label>
+				<button type="submit" class="btn btn-primary">권한 추가</button>
+			</form>
+		</div>
+	</div>
+
+	<div>
+		<a th:href="@{/users}">사용자 목록으로 돌아가기</a>
+	</div>
+
+</body>
+</html>

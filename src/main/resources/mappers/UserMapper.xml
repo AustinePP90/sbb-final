@@ -35,5 +35,32 @@
         INSERT INTO tuser_roles (user_id, role_id)
         VALUES (#{userId}, #{roleId})
     </insert>
-    
+    <!--모든 유저 읽어오기-->
+    <select id="findAll" resultMap="UserWithRoles">
+        SELECT u.id as user_id,
+               u.username,
+               u.password,
+               u.enabled,
+               r.id as role_id,
+               r.name as role_name
+        FROM tusers u
+                 LEFT JOIN tuser_roles ur ON u.id = ur.user_id
+                 LEFT JOIN roles r ON ur.role_id = r.id
+        ORDER BY u.id
+    </select>
+    <!--유저ID로 유저 권한(ROLES) 읽어오기-->
+	<select id="findRolesByUserId" resultType="com.mysite.sbbfinal.domain.Role">
+        SELECT r.id, r.name
+        FROM roles r
+                 JOIN tuser_roles ur ON r.id = ur.role_id
+        WHERE ur.user_id = #{userId} ORDER BY id
+    </select>
+    <!--유저ID로 유저 정보 읽어오기(유저 이름 읽어올때 사용)-->
+	<select id="findById" resultType="com.mysite.sbbfinal.domain.User">
+        SELECT * FROM tusers WHERE id = #{id}
+    </select>
+    <!--모든 권한 읽어오기-->
+    <select id="getAllRoles" resultType="com.mysite.sbbfinal.domain.Role">
+        SELECT * FROM roles ORDER BY name
+    </select>
 </mapper>
