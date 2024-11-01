@@ -23,4 +23,6 @@ public interface UserMapper {
     User findById(@Param("id") Long id);
     
     List<Role> getAllRoles();
+    
+    void deleteUserRole(@Param("userId") Long userId, @Param("roleId") Long roleId);
 }

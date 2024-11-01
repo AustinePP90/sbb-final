@@ -63,4 +63,8 @@
     <select id="getAllRoles" resultType="com.mysite.sbbfinal.domain.Role">
         SELECT * FROM roles ORDER BY name
     </select>
+    <!--권한 삭제하기-->
+     <delete id="deleteUserRole" parameterType="com.mysite.sbbfinal.domain.User">
+    	DELETE FROM tuser_roles WHERE user_id = #{userId} AND role_id = #{roleId};
+    </delete>
 </mapper>

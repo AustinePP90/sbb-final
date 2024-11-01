@@ -30,7 +30,7 @@
 
 	<!-- 권한 추가 폼 -->
 	<div>
-		<div>권한 추가</div>
+		<div>[권한 추가]</div>
 		<div>
 			<form th:action="@{/user/{userId}/role/add(userId=${userId})}" method="post">
 				<label for="roleId"> 
@@ -42,6 +42,22 @@
 				</label>
 				<button type="submit" class="btn btn-primary">권한 추가</button>
 			</form>
+		</div>
+		<br>
+		<div>[권한 삭제]</div>
+		<div>
+			<form th:action="@{/user/{userId}/role/delete(userId=${userId})}" method="post">
+				<label for="roleId"> 
+					<select name="roleId" id="roleId">
+						<option th:each="role : ${roles}"
+							 	th:value="${role.id}" th:text="${role.name}"></option>
+					</select>
+				</label>
+				<button type="submit">권한 삭제</button>
+			</form>
+			<div>참고: <span th:each="role : ${allRoles}" th:value="${role.id}"
+							 th:text="${role.name + ' '}"></span>
+			</div>
 		</div>
 	</div>
 

@@ -82,4 +82,22 @@ public class HomeController {
 
         return "user-roles";
     }
+    
+    // 권한 추가 처리
+    @PostMapping("/user/{userId}/role/add")
+    public String addRole(@PathVariable("userId") Long userId, @RequestParam("roleId") Long roleId) {
+        userMapper.insertUserRole(userId, roleId);
+        return "redirect:/user/%d/roles".formatted(userId);
+    }
+    
+    // 권한 삭제 처리
+	@PostMapping("/user/{userId}/role/delete")
+	public String deleteRole(@PathVariable("userId") Long userId,
+							 @RequestParam("roleId") Long roleId) {
+		
+		userMapper.deleteUserRole(userId, roleId);
+		
+		return "redirect:/user/%d/roles".formatted(userId);
+	}
+    
 }
