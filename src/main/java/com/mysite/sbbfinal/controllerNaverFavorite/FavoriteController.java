@@ -36,4 +36,9 @@ public class FavoriteController {
         favoriteService.addFavorite(favorite);
         return ResponseEntity.ok("Added to favorites");
     }
+    
+    @GetMapping("/favorites")
+    public List<Favorite> getFavorites(@RequestParam("userId") int userId) {
+        return favoriteService.getFavoritesByUserId(userId);
+    }
 }

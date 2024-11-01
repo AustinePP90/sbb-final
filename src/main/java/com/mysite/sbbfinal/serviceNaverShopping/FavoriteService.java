@@ -1,5 +1,7 @@
 package com.mysite.sbbfinal.serviceNaverShopping;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.mysite.sbbfinal.dtoNaverFavorite.Favorite;
@@ -16,6 +18,10 @@ public class FavoriteService {
     
     public void addFavorite(Favorite favorite) {
         favoriteMapper.insertFavorite(favorite);
+    }
+    
+    public List<Favorite> getFavoritesByUserId(int userId) {
+        return favoriteMapper.selectFavoritesByUserId(userId);
     }
 
 }

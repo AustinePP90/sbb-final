@@ -10,19 +10,13 @@ import com.mysite.sbbfinal.domain.User;
 
 @Mapper
 public interface UserMapper {
-	User findByUsername(@Param("username") String username);
-	
-    void save(User user);
-    
+	User findByUsername(@Param("username") String username);	
+    void save(User user);    
     void insertUserRole(@Param("userId") Long userId, @Param("roleId") Long roleId);
-    
-    List<User> findAll();
-    
-    List<Role> findRolesByUserId(@Param("userId") Long userId);
-    
-    User findById(@Param("id") Long id);
-    
+    List<User> findAll();  
+    List<Role> findRolesByUserId(@Param("userId") Long userId);  
+    User findById(@Param("id") Long id); 
     List<Role> getAllRoles();
-    
     void deleteUserRole(@Param("userId") Long userId, @Param("roleId") Long roleId);
+    
 }
